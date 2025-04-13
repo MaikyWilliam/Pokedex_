@@ -5,9 +5,12 @@ const form = document.querySelector('.form');
 const inputSearch = document.querySelector('.input_search');
 const buttonPrev = document.querySelector('.btn-prev');
 const buttonNext = document.querySelector('.btn-next');
+const buttonRandom = document.querySelector('.btn-random');
+const limitedPokemon = 1025;
+
 
 function randomPokemon() {
-    let searchPokemon = Math.floor(Math.random() * 649);
+    let searchPokemon = Math.floor(Math.random() * limitedPokemon) + 1;
     renderPokemon(searchPokemon)
 }
 
@@ -20,33 +23,46 @@ const fecthPokemon = async (pokemon)=> {
     }
 }
 
-const renderPokemon = async (pokemon)=> {
+const renderPokemon = async (pokemon) => {
 
-    pokemonName.innerHTML = 'Loading...'
-    pokemonNumber.innerHTML = ""
+    pokemonName.innerHTML = 'Loading...';
+    pokemonNumber.innerHTML = "";
 
     const data = await fecthPokemon(pokemon);
 
-    
-    if(data){
-        console.log(data);
-        pokemonName.innerHTML = data.name
-        pokemonNumber.innerHTML = data.id
-        searchPokemon = data.id
+    if (data) {
+        pokemonName.innerHTML = data.name;
+        pokemonNumber.innerHTML = data.id;
+        searchPokemon = data.id;
         pokemonImage.style.display = 'block';
-        image = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default']
 
-        if(image){
-            pokemonImage.src = image 
-        }else{
-            pokemonImage.src = data['sprites']['front_default']
+        image = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default'];
+
+        if (image) {
+            pokemonImage.src = image;
+        } else {
+            pokemonImage.src = data['sprites']['front_default'];
         }
-    }else{
-        pokemonName.innerHTML = 'Não Encontrado :C'
-        pokemonNumber.innerHTML = ""
+
+    } else if (pokemon == 1402) {
+        pokemonName.innerHTML = "Caio Maia";
+        pokemonNumber.innerHTML = "1402";
+        searchPokemon = 1402;
+        pokemonImage.style.display = 'block';
+        pokemonImage.src = "./CAIO.png";
+    } else if (pokemon == 2019) {
+        pokemonName.innerHTML = "Familia Maia";
+        pokemonNumber.innerHTML = "2019";
+        searchPokemon = 2019;
+        pokemonImage.style.display = 'block';
+        pokemonImage.src = "./FAMILIA.png";
+    } else {
+        pokemonName.innerHTML = 'Não Encontrado :C';
+        pokemonNumber.innerHTML = "";
         pokemonImage.style.display = 'none';
     }
-}
+};
+
 
 form.addEventListener('submit', (event)=>{
     event.preventDefault();
@@ -61,10 +77,14 @@ buttonPrev.addEventListener('click', ()=>{
 })
 
 buttonNext.addEventListener('click', ()=>{
-    if(searchPokemon < 905)
+    if(searchPokemon < limitedPokemon)
         searchPokemon += 1
         renderPokemon(searchPokemon)
 
+})
+
+buttonRandom.addEventListener('click', ()=>{
+    randomPokemon();
 })
 
 function clearInput() {

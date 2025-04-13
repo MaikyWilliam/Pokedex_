@@ -78,8 +78,10 @@ main {
 }
 
 .button {
-    width: 50%;
+    flex: 1;
     padding: 4%;
+    min-height: 50px;
+    line-height: 1;
     border: 2px solid #0000;
     border-radius: 5px;
     font-size: clamp(8px, 5vw, 1rem);
@@ -88,9 +90,10 @@ main {
     background-color: #444;
     box-shadow: -2px 3px 0 #222, -4px 6px 0 #000;
     cursor: pointer;
+    transition: all 0.1s ease-in-out;
 }
 
-.button:active{
-    box-shadow: inset -4px 4px 0 #222;
-    font-size: 0.9rem;
+.button:active {
+    box-shadow: inset -2px 2px 0 #222;
+    transform: translateY(2px);
 }
